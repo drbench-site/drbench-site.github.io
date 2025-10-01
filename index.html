@@ -1,1 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DRBench: A Realistic Benchmark for Enterprise Deep Research</title>
+    <meta name="description" content="Project page for DRBench: A Realistic Benchmark for Enterprise Deep Research.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            /* Blue theme */
+            --bg: #163b74;
+            /* brighter navy */
+            --panel: #1f4c8f;
+            /* mid blue panel */
+            --panel-2: #255aa8;
+            /* gradient depth */
+            --text: #ffffff;
+            /* white text */
+            --muted: #e2ebff;
+            /* softer blue-gray */
+            --brand: #3b82f6;
+            /* primary blue */
+            --brand-2: #bfdbfe;
+            /* lighter blue */
+            --accent: #38bdf8;
+            /* cyan accent */
+            --border: #2a62b5;
+            /* blue border */
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        }
+
+        a {
+            color: var(--brand-2);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        header {
+            padding: 40px 0 20px;
+            text-align: center;
+        }
+
+        .title {
+            font-weight: 800;
+            font-size: clamp(28px, 4.5vw, 46px);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin: 0;
+        }
+
+        .subtitle {
+            margin: 8px 0 0;
+            font-size: 16px;
+            color: var(--muted);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--brand), var(--brand-2));
+            color: white;
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .panel {
+            background: linear-gradient(180deg, var(--panel), var(--panel-2));
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+            margin: 0 auto 22px auto;
+            /* equal width panels with space between */
+            max-width: 1100px;
+            /* match citation and leave horizontal breathing room */
+        }
+
+        .authors {
+            margin-top: 18px;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .authors sup {
+            color: var(--muted);
+            font-size: .8em;
+        }
+
+        .affils {
+            margin-top: 8px;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .contacts {
+            margin-top: 8px;
+            display: flex;
+            gap: 10px 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .contact-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text);
+        }
+
+        .contact-item .icon {
+            font-size: 14px;
+            opacity: .9;
+        }
+
+        .contact-item .name {
+            font-weight: 600;
+        }
+
+        .contact-item a {
+            color: var(--brand-2);
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        .contacts-title {
+            margin-top: 12px;
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .btns {
+            margin-top: 18px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: #1f4c8f;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            border-color: #2a62b5;
+            box-shadow: 0 0 0 3px rgba(191, 219, 254, .25) inset;
+            text-decoration: none;
+        }
+
+        .btn.secondary {
+            background: #255aa8;
+            color: var(--text);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        @media (min-width: 900px) {
+            .grid {
+                grid-template-columns: 1.4fr .9fr;
+            }
+        }
+
+        section {
+            margin-top: 26px;
+        }
+
+        section h2 {
+            margin: 0 0 10px;
+            font-size: 22px;
+        }
+
+        .code {
+            background: #1a4891;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+            overflow: auto;
+        }
+
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .copy {
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: #1f4c8f;
+            color: #e8eef2;
+            font-weight: 600;
+        }
+
+        .copy:active {
+            transform: translateY(1px);
+        }
+
+        .video {
+            aspect-ratio: 16/9;
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #1a4891;
+        }
+
+        footer {
+            margin: 40px 0 10px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        /* Zoomable image + lightbox */
+        .zoomable {
+            cursor: zoom-in;
+        }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .lightbox.open {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 92vw;
+            max-height: 92vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            cursor: zoom-out;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="badge">Project Page</div>
+            <h1 class="title">DRBench: A Realistic Benchmark for Enterprise Deep Research</h1>
+            <div class="authors">
+                Amirhossein Abaskohi<sup>1,2</sup>,
+                Tianyi Chen<sup>1</sup>,
+                Miguel Muñoz-Mármol<sup>1</sup>,
+                Curtis Fox<sup>1,2</sup>,
+                Amrutha Varshini Ramesh<sup>1,2</sup>,
+                Étienne Marcotte<sup>1</sup>,
+                Xing Han Lù<sup>3,4</sup>,
+                Nicolas Chapados<sup>1</sup>,
+                Spandana Gella<sup>1,3</sup>,
+                Christopher Pal<sup>1,3,5</sup>,
+                Alexandre Drouin<sup>1,3</sup>,
+                Issam H. Laradji<sup>1,2</sup>
+            </div>
+            <div class="affils">
+                <span class="pill">1 ServiceNow Research</span>
+                <span class="pill">2 University of British Columbia</span>
+                <span class="pill">3 Mila — Quebec AI Institute</span>
+                <span class="pill">4 McGill University</span>
+                <span class="pill">5 Canada CIFAR AI Chair</span>
+            </div>
+
+            <div class="contacts-title">Contacts</div>
+            <div class="contacts" aria-label="Contact emails">
+                <span class="contact-item"><span class="name">Amirhossein Abaskohi</span> · <a
+                        href="mailto:amirhossein.abaskohi@servicenow.com">amirhossein.abaskohi@servicenow.com</a></span>
+                <span class="contact-item"><span class="name">Issam H. Laradji</span> · <a
+                        href="mailto:issam.laradji@servicenow.com">issam.laradji@servicenow.com</a></span>
+            </div>
+
+            <div class="btns">
+                <a class="btn" href="https://github.com/ServiceNow/drbench" target="_blank" rel="noopener">💻 Code
+                    (GitHub)</a>
+                <a class="btn" href="https://arxiv.org/abs/REPLACE_ARXIV_ID" target="_blank" rel="noopener">📄 Paper</a>
+            </div>
+            <p class="muted" style="margin-top:10px">Please replace the arXiv ID in paper link above with the
+                correct
+                identifier.
+            </p>
+        </header>
+
+        <div class="panel">
+            <section id="abstract">
+                <h2>Abstract</h2>
+                <p class="muted">We introduce DRBench, a benchmark for evaluating AI agents on complex, open-ended
+                    deep research tasks in enterprise settings. Unlike prior benchmarks that focus on simple
+                    questions or web-only queries, DRBench evaluates agents on multi-step queries (for
+                    example, "What changes should we make to our product roadmap to ensure compliance
+                    with this standard?"") that require identifying supporting facts from both the public web
+                    and private company knowledge base. Each task is grounded in realistic user personas
+                    and enterprise context, spanning a heterogeneous search space that includes productivity
+                    software, cloud file systems, emails, chat conversations, and the open web. Tasks
+                    are generated through a carefully designed synthesis pipeline with human-in-the-loop
+                    verification, and agents are evaluated on their ability to recall relevant insights, maintain
+                    factual accuracy, and produce coherent, well-structured reports. We release 15 deep
+                    research tasks across 10 domains, such as Sales, Cybersecurity, and Compliance. We
+                    demonstrate the effectiveness of DRBench by evaluating diverse DR agents across open-
+                    and closed-source models (such as GPT, Llama, and Qwen) and DR strategies, high-
+                    lighting their strengths, weaknesses, and the critical path for advancing enterprise deep
+                    research.</p>
+            </section>
+        </div>
+
+        <div class="panel">
+            <section id="video">
+                <h2>DRBench Agent Demo</h2>
+                <div class="video">
+                    <img id="demoGif" class="zoomable" src="drbench_web_agent.gif" alt="DRBench Web Agent Demo"
+                        style="width:100%; height:100%; object-fit: contain; border-radius: 10px;" />
+                </div>
+            </section>
+        </div>
+
+        <!-- Lightbox for GIF -->
+        <div id="lightbox" class="lightbox" aria-hidden="true">
+            <img id="lightboxImg" src="drbench_web_agent.gif" alt="DRBench Web Agent Demo (expanded)">
+        </div>
+
+        <div class="panel">
+            <section id="citation">
+                <div class="row">
+                    <h2 style="margin:0">Citation</h2>
+                    <button id="copyBib" class="copy">Copy BibTeX</button>
+                </div>
+                <div class="code" style="margin-top:10px">
+                    <pre id="bibtex">@misc{drbench2025,
+  title         = {DRBench: A Realistic Benchmark for Enterprise Deep Research},
+  author        = {Amirhossein Abaskohi and Tianyi Chen and Miguel Mu\~noz-M\'armol and Curtis Fox and Amrutha Varshini Ramesh and \u00C9tienne Marcotte and Xing Han L\`u and Nicolas Chapados and Spandana Gella and Christopher Pal and Alexandre Drouin and Issam H. Laradji},
+  year          = {2025},
+  eprint        = {REPLACE_ARXIV_ID},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI}
+}
+                    </pre>
+                </div>
+                <p class="muted" style="margin-top:10px">Please replace the arXiv ID above with the correct
+                    identifier.</p>
+            </section>
+        </div>
+
+        <footer>
+            © 2025 DRBench Authors. Site generated for the research community.
+        </footer>
+    </div>
+
+    <script>
+        const copyBtn = document.getElementById('copyBib');
+        const bib = document.getElementById('bibtex');
+        const demoGif = document.getElementById('demoGif');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        copyBtn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(bib.innerText.trim());
+                copyBtn.textContent = 'Copied!';
+                setTimeout(() => copyBtn.textContent = 'Copy BibTeX', 1800);
+            } catch (e) {
+                copyBtn.textContent = 'Copy failed';
+                setTimeout(() => copyBtn.textContent = 'Copy BibTeX', 1800);
+            }
+        });
+
+        // Simple lightbox for GIF enlarge on click
+        if (demoGif && lightbox && lightboxImg) {
+            demoGif.addEventListener('click', () => {
+                lightbox.classList.add('open');
+                lightbox.setAttribute('aria-hidden', 'false');
+            });
+            const closeLightbox = () => {
+                lightbox.classList.remove('open');
+                lightbox.setAttribute('aria-hidden', 'true');
+            };
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox || e.target === lightboxImg) closeLightbox();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeLightbox();
+            });
+        }
+    </script>
+</body>
+
+</html>
